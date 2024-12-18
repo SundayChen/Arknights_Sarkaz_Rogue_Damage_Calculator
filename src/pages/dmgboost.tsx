@@ -1,22 +1,17 @@
 import DataContext from "@/contexts/data";
 import ItemContext from "@/contexts/item";
 import {
-  Box,
+  Wrap,
   Card,
   CardBody,
-  Checkbox,
   HStack,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
+  Checkbox,
+  Box,
   Text,
-  Wrap,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 
-const OutterPage = () => {
+const DamageBoostPage = () => {
   const dataCtx = useContext(DataContext);
   const itemCtx = useContext(ItemContext);
 
@@ -31,7 +26,7 @@ const OutterPage = () => {
       justifyContent="center"
     >
       <Wrap flex={1}>
-        {itemCtx.outterItems.map((item, index) => {
+        {itemCtx.ADBoostItems.map((item, index) => {
           return (
             <Card width={180}>
               <CardBody p={3}>
@@ -41,84 +36,13 @@ const OutterPage = () => {
                     borderColor="gray.300"
                     isChecked={item.possesion}
                     onChange={() => {
-                      if (itemCtx.outterItems[index].possesion) {
-                        dataCtx.setOutter(
-                          dataCtx.outter - item.data * (item.inputNumber ?? 1)
-                        );
+                      if (itemCtx.ADBoostItems[index].possesion) {
+                        dataCtx.setADBoost(dataCtx.ADBoost - item.data);
                       } else {
-                        dataCtx.setOutter(
-                          dataCtx.outter + item.data * (item.inputNumber ?? 1)
-                        );
+                        dataCtx.setADBoost(dataCtx.ADBoost + item.data);
                       }
-                      itemCtx.setOutterItems(
-                        itemCtx.outterItems.map((i, idx) => {
-                          if (idx === index) {
-                            return {
-                              ...i,
-                              possesion: !i.possesion,
-                            };
-                          }
-                          return i;
-                        })
-                      );
-                    }}
-                  />
-                </HStack>
-                {item.inputNumber !== undefined && item.possesion && (
-                  <NumberInput
-                    mt={1}
-                    borderColor="gray.400"
-                    size="sm"
-                    min={0}
-                    value={item.inputNumber}
-                    onChange={(value) => {
-                      const old_outter =
-                        dataCtx.outter - item.data * (item.inputNumber ?? 0);
-                      itemCtx.setOutterItems(
-                        itemCtx.outterItems.map((i, idx) => {
-                          if (idx === index) {
-                            return {
-                              ...i,
-                              inputNumber: Number.parseInt(value),
-                            };
-                          }
-                          return i;
-                        })
-                      );
-                      dataCtx.setOutter(
-                        old_outter + item.data * Number.parseInt(value)
-                      );
-                    }}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                )}
-              </CardBody>
-            </Card>
-          );
-        })}
-
-        {itemCtx.meleeOutterItems.map((item, index) => {
-          return (
-            <Card width={180}>
-              <CardBody p={3}>
-                <HStack>
-                  <Text key={index}>{item.name}</Text>
-                  <Checkbox
-                    borderColor="gray.300"
-                    isChecked={item.possesion}
-                    onChange={() => {
-                      if (itemCtx.meleeOutterItems[index].possesion) {
-                        dataCtx.setMeleeOutter(dataCtx.meleeOutter - item.data);
-                      } else {
-                        dataCtx.setMeleeOutter(dataCtx.meleeOutter + item.data);
-                      }
-                      itemCtx.setMeleeOutterItems(
-                        itemCtx.meleeOutterItems.map((i, idx) => {
+                      itemCtx.setADBoostItems(
+                        itemCtx.ADBoostItems.map((i, idx) => {
                           if (idx === index) {
                             return {
                               ...i,
@@ -136,7 +60,7 @@ const OutterPage = () => {
           );
         })}
 
-        {itemCtx.rangedOutterItems.map((item, index) => {
+        {itemCtx.APBoostItems.map((item, index) => {
           return (
             <Card width={180}>
               <CardBody p={3}>
@@ -146,17 +70,57 @@ const OutterPage = () => {
                     borderColor="gray.300"
                     isChecked={item.possesion}
                     onChange={() => {
-                      if (itemCtx.rangedOutterItems[index].possesion) {
-                        dataCtx.setRangedOutter(
-                          dataCtx.rangedOutter - item.data
+                      if (itemCtx.APBoostItems[index].possesion) {
+                        dataCtx.setAPBoost(dataCtx.APBoost - item.data);
+                      } else {
+                        dataCtx.setAPBoost(dataCtx.APBoost + item.data);
+                      }
+                      itemCtx.setAPBoostItems(
+                        itemCtx.APBoostItems.map((i, idx) => {
+                          if (idx === index) {
+                            return {
+                              ...i,
+                              possesion: !i.possesion,
+                            };
+                          }
+                          return i;
+                        })
+                      );
+                    }}
+                  />
+                </HStack>
+              </CardBody>
+            </Card>
+          );
+        })}
+
+        {itemCtx.dmgBoostItems.map((item, index) => {
+          return (
+            <Card width={180}>
+              <CardBody p={3}>
+                <HStack>
+                  <Text key={index}>{item.name}</Text>
+                  <Checkbox
+                    borderColor="gray.300"
+                    isChecked={item.possesion}
+                    onChange={() => {
+                      if (itemCtx.dmgBoostItems[index].possesion) {
+                        dataCtx.setAPBoost(
+                          dataCtx.APBoost / (1 + item.data / 100)
+                        );
+                        dataCtx.setADBoost(
+                          dataCtx.ADBoost / (1 + item.data / 100)
                         );
                       } else {
-                        dataCtx.setRangedOutter(
-                          dataCtx.rangedOutter + item.data
+                        dataCtx.setAPBoost(
+                          dataCtx.APBoost * (1 + item.data / 100)
+                        );
+                        dataCtx.setADBoost(
+                          dataCtx.ADBoost * (1 + item.data / 100)
                         );
                       }
-                      itemCtx.setRangedOutterItems(
-                        itemCtx.rangedOutterItems.map((i, idx) => {
+                      itemCtx.setDmgBoostItems(
+                        itemCtx.dmgBoostItems.map((i, idx) => {
                           if (idx === index) {
                             return {
                               ...i,
@@ -175,12 +139,11 @@ const OutterPage = () => {
         })}
       </Wrap>
       <HStack mt="auto" fontSize={24} spacing={10}>
-        <Text>局外加攻: {dataCtx.outter}%</Text>
-        <Text>近战加攻：{dataCtx.meleeOutter}%</Text>
-        <Text>远程加攻：{dataCtx.rangedOutter}%</Text>
+        <Text>物理伤害: {parseFloat(dataCtx.ADBoost.toFixed(3))}%</Text>
+        <Text>法术伤害：{parseFloat(dataCtx.APBoost.toFixed(3))}%</Text>
       </HStack>
     </Box>
   );
 };
 
-export default OutterPage;
+export default DamageBoostPage;

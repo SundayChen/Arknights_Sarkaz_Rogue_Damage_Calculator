@@ -26,7 +26,7 @@ const HeadNavBar = () => {
     { icon: LuBone, label: "局外加攻", path: "/outter" },
     { icon: LuCrown, label: "局内加攻", path: "/inner" },
     { icon: TbGlassCocktail, label: "攻速藏品", path: "/atkspeed" },
-    { icon: LuSparkles, label: "增伤乘区", path: "/atkboost" },
+    { icon: LuSparkles, label: "增伤乘区", path: "/dmgboost" },
     { icon: LuSkull, label: "敌人属性", path: "/enemy" },
   ];
 
