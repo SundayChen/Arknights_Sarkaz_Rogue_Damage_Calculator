@@ -13,9 +13,9 @@
     "windows": [
       {
         "title": "萨卡兹肉鸽伤害计算器",
-        "width": 800,
+        "width": 1000,
         "height": 600,
-        "minWidth": 800,
+        "minWidth": 1000,
         "minHeight": 600,
         "resizable": true,
         "fullscreen": false,

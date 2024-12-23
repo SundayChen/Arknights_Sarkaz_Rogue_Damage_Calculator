@@ -1,3 +1,4 @@
+import DamageCalculator from "@/components/damage-calculator";
 import DataContext from "@/contexts/data";
 import { Box, Flex, HStack, Text, Tooltip } from "@chakra-ui/react";
 import { useContext } from "react";
@@ -13,18 +14,6 @@ const HomePage = () => {
     "需要进入关卡触发条件的为局内加攻(如轰鸣之手)，否则为局外加攻(如进入关卡前就能确认效果的携带加攻)；“增伤乘区”页之外的增伤藏品全为叠乘，如断杖-波纹";
   const added: string =
     "“增伤乘区”页之外的增伤藏品全为叠乘，如Scout的狙击镜、“文明的存续”。紧急活性剂、疗养体验卡、疗养特供卡自行处理";
-
-  const bossHP = 360000 * (dataCtx.enemyHP / 100);
-  const ela3 =
-    755 *
-      1.8 *
-      1.35 *
-      40 *
-      (1 + dataCtx.outter / 100) *
-      (1 + dataCtx.rangedOutter / 100) *
-      (1 + dataCtx.inner / 100 + 0.9) *
-      (dataCtx.ADBoost / 100) -
-    (40 * 2400 * dataCtx.enemyDef) / 100;
 
   return (
     <Flex direction="column" justify="flex-start" align="center" p={3}>
@@ -43,7 +32,7 @@ const HomePage = () => {
         <Text>敌人防御: {parseFloat(dataCtx.enemyDef.toFixed(3))}%</Text>
       </HStack>
 
-      <HStack mt={2} px={3}>
+      <HStack mt={2} mb={4} px={3}>
         <Text>
           不能统一计算的
           <Tooltip label={outter} bg="gray.600">
@@ -72,20 +61,7 @@ const HomePage = () => {
           ，以及灵感、局内干员buff，需要在此页单独处理。历史重构(科技树)20%局外加攻、难度debuff(加血减伤)默认生效
         </Text>
       </HStack>
-
-      <HStack mt={4}>
-        <Text>
-          奎隆生命值：
-          {parseFloat(bossHP.toFixed(3))}
-        </Text>
-      </HStack>
-      <HStack mt={2}>
-        <Text>
-          艾拉3：
-          {parseFloat(ela3.toFixed(3))}
-        </Text>
-        <Text> {parseFloat(((ela3 / bossHP) * 100).toFixed(3))}%</Text>
-      </HStack>
+      <DamageCalculator />
     </Flex>
   );
 };

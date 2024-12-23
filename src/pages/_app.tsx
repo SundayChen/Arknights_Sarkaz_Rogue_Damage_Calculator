@@ -1,6 +1,7 @@
 import chakraExtendTheme from "@/chakra-theme";
 import { Fade } from "@/components/transition";
 import { DataContextProvider } from "@/contexts/data";
+import { ExtraContextProvider } from "@/contexts/extra";
 import { ItemContextProvider } from "@/contexts/item";
 import MainLayout from "@/layouts/main-layout";
 import "@/styles/globals.css";
@@ -26,11 +27,13 @@ export default function App({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={chakraExtendTheme}>
       <DataContextProvider>
         <ItemContextProvider>
-          <MainLayout>
-            <Fade key={router.pathname.split("/")[1] || ""} in>
-              <Component {...pageProps} />
-            </Fade>
-          </MainLayout>
+          <ExtraContextProvider>
+            <MainLayout>
+              <Fade key={router.pathname.split("/")[1] || ""} in>
+                <Component {...pageProps} />
+              </Fade>
+            </MainLayout>
+          </ExtraContextProvider>
         </ItemContextProvider>
       </DataContextProvider>
     </ChakraProvider>

@@ -27,7 +27,7 @@ export const _meleeOutterItems: Item[] = [
 ];
 
 export const _rangedOutterItems: Item[] = [
-  { name: "显圣吊坠", data: 25, possesion: false },
+  { name: "显圣吊坠", data: 15, possesion: false },
   { name: "银餐叉", data: 25, possesion: false },
   { name: "损坏的左轮弹巢", data: 35, possesion: false },
 ];
