@@ -72,6 +72,7 @@ const OutterPage = () => {
                     min={0}
                     value={item.inputNumber}
                     onChange={(value) => {
+                      if (!Number.parseInt(value)) return;
                       const old_outter =
                         dataCtx.outter - item.data * (item.inputNumber ?? 0);
                       itemCtx.setOutterItems(

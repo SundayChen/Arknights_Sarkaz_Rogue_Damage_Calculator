@@ -72,6 +72,7 @@ const AttackSpeedPage = () => {
                     min={0}
                     value={item.inputNumber}
                     onChange={(value) => {
+                      if (!Number.parseInt(value)) return;
                       const old_atkSpeed =
                         dataCtx.atkSpeed - item.data * (item.inputNumber ?? 0);
                       itemCtx.setAtkSpeedItems(

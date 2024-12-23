@@ -72,6 +72,7 @@ const InnerPage = () => {
                     min={0}
                     value={item.inputNumber}
                     onChange={(value) => {
+                      if (!Number.parseInt(value)) return;
                       const old_inner =
                         dataCtx.inner - item.data * (item.inputNumber ?? 0);
                       itemCtx.setInnerItems(

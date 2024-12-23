@@ -74,6 +74,7 @@ const EnemyPage = () => {
                     min={1}
                     value={item.inputNumber}
                     onChange={(value) => {
+                      if (!Number.parseInt(value)) return;
                       const old_HP =
                         dataCtx.enemyHP /
                         (1 + item.data / 100) ** (item.inputNumber ?? 0);
