@@ -1,4 +1,5 @@
 import DataContext from "@/contexts/data";
+import EnemyContext from "@/contexts/enemy";
 import ExtraContext from "@/contexts/extra";
 import { Skill } from "@/models/skill";
 import {
@@ -17,15 +18,23 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { useContext } from "react";
+import EnemyCard from "./enemy-card";
 
 const DamageCalculator = () => {
   const dataCtx = useContext(DataContext);
   const extraCtx = useContext(ExtraContext);
+  const enemyCtx = useContext(EnemyContext);
 
-  const bossHP = 360000 * (dataCtx.enemyHP / 100);
-  const bossDef = 2400 * (dataCtx.enemyDef / 100);
+  const bossHP = enemyCtx.HP * (dataCtx.enemyHP / 100);
+  const bossDef =
+    enemyCtx.def < enemyCtx.defReduceNum
+      ? 0
+      : (((enemyCtx.def - enemyCtx.defReduceNum) * enemyCtx.defPercent) / 100) *
+        (dataCtx.enemyDef / 100);
   const bossRes =
-    ((75 - extraCtx.resReduceNum) * (100 - extraCtx.resReducePercent)) / 100;
+    enemyCtx.res < enemyCtx.resReduceNum
+      ? 0
+      : ((enemyCtx.res - enemyCtx.resReduceNum) * enemyCtx.resPercent) / 100;
 
   const ela3_calc = (
     extraOutter: number,
@@ -283,7 +292,7 @@ const DamageCalculator = () => {
         (1.8 + (dataCtx.inner + extraInner) / 100) +
         extraAdd) *
         (0.9 + 0.1 * 3.75) *
-        (118 - bossRes)) /
+        (118 - bossRes > 100 ? 100 : 118 - bossRes)) /
         100) *
       (dataCtx.APBoost / 100) *
       (extraBoost / 100) *
@@ -397,9 +406,7 @@ const DamageCalculator = () => {
 
   return (
     <Flex direction="column" justify="flex-start" align="center">
-      <HStack>
-        <Text>奎隆生命值：{parseFloat(bossHP.toFixed(3))}</Text>
-      </HStack>
+      <EnemyCard bossHP={bossHP} bossDef={bossDef} bossRes={bossRes} />
 
       <TableContainer w="100%" my={3}>
         <Table variant="simple" colorScheme="blackAlpha" w="100%" size="sm">
@@ -416,7 +423,7 @@ const DamageCalculator = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {Array.from({ length: 6 }).map((_, index) => (
               <Tr key={index}>
                 <Td>
                   <Select
@@ -426,9 +433,6 @@ const DamageCalculator = () => {
                       let cur = extraCtx.selectedSkill;
                       cur[index] = Number.parseInt(e.target.value);
                       extraCtx.setSelectedSkill([...cur]);
-                      if (e.target.value === "3") extraCtx.setResReduceNum(10);
-                      if (e.target.value === "5")
-                        extraCtx.setResReducePercent(30);
                     }}
                     borderColor="gray.400"
                     size="sm"

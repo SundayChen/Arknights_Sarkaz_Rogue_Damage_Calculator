@@ -14,9 +14,9 @@
       {
         "title": "萨卡兹肉鸽伤害计算器",
         "width": 1000,
-        "height": 600,
+        "height": 700,
         "minWidth": 1000,
-        "minHeight": 600,
+        "minHeight": 700,
         "resizable": true,
         "fullscreen": false,
         "center": true

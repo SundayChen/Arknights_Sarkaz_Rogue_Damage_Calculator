@@ -1,6 +1,14 @@
 import DamageCalculator from "@/components/damage-calculator";
 import DataContext from "@/contexts/data";
-import { Box, Button, Flex, HStack, IconButton, Text, Tooltip } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  IconButton,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
 import { useContext } from "react";
 import { LuGithub } from "react-icons/lu";
 
@@ -25,17 +33,15 @@ const HomePage = () => {
         <Text>近战加攻: {dataCtx.meleeOutter}%</Text>
         <Text>远程加攻: {dataCtx.rangedOutter}%</Text>
         <Text>局内加攻: {dataCtx.inner}%</Text>
-        <Text>攻速加成: +{dataCtx.atkSpeed}</Text>
       </HStack>
       <HStack fontSize="sm">
+        <Text>攻速加成: +{dataCtx.atkSpeed}</Text>
         <Text>技力回复: +{dataCtx.skillRecovery / 100}</Text>
         <Text>物理伤害: {parseFloat(dataCtx.ADBoost.toFixed(3))}%</Text>
         <Text>法术伤害: {parseFloat(dataCtx.APBoost.toFixed(3))}%</Text>
-        <Text>敌人生命: {parseFloat(dataCtx.enemyHP.toFixed(3))}%</Text>
-        <Text>敌人防御: {parseFloat(dataCtx.enemyDef.toFixed(3))}%</Text>
       </HStack>
 
-      <HStack mt={2} mb={4} px={3}>
+      <HStack mt={4} mb={1} px={24}>
         <Text>
           不便全局统一计算的
           <Tooltip label={outter} bg="gray.600">
@@ -61,7 +67,9 @@ const HomePage = () => {
               其他部分藏品
             </Box>
           </Tooltip>
-          ，以及灵感、局内干员buff，需要在此页单独处理(在后面页面选择的藏品不需要在此页重复输入)。历史重构(科技树)20%局外加攻、难度debuff(加血减伤)默认生效
+          ，以及灵感、局内干员buff，需要在此页单独处理
+          (在后面页面选择的藏品不需要在此页重复输入) 。历史重构 (科技树)
+          20%局外加攻、难度debuff (加血减伤) 默认生效
         </Text>
       </HStack>
 
