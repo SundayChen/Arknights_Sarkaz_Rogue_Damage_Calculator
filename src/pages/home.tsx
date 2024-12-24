@@ -1,7 +1,8 @@
 import DamageCalculator from "@/components/damage-calculator";
 import DataContext from "@/contexts/data";
-import { Box, Flex, HStack, Text, Tooltip } from "@chakra-ui/react";
+import { Box, Flex, HStack, IconButton, Text, Tooltip } from "@chakra-ui/react";
 import { useContext } from "react";
+import { LuGithub } from "react-icons/lu";
 
 const HomePage = () => {
   const dataCtx = useContext(DataContext);
@@ -16,7 +17,7 @@ const HomePage = () => {
     "“增伤乘区”页之外的增伤藏品全为叠乘，如Scout的狙击镜、“文明的存续”。紧急活性剂、疗养体验卡、疗养特供卡自行处理";
 
   return (
-    <Flex direction="column" justify="flex-start" align="center" p={3}>
+    <Flex direction="column" h="100%" justify="flex-start" align="center" p={3}>
       <HStack fontSize="sm">
         <Text>局外加攻: {dataCtx.outter}%</Text>
         <Text>近战加攻: {dataCtx.meleeOutter}%</Text>
@@ -34,7 +35,7 @@ const HomePage = () => {
 
       <HStack mt={2} mb={4} px={3}>
         <Text>
-          不能统一计算的
+          不便全局统一计算的
           <Tooltip label={outter} bg="gray.600">
             <Box as="span" fontWeight="bold" textDecoration="underline">
               局外加攻藏品
@@ -58,10 +59,39 @@ const HomePage = () => {
               其他部分藏品
             </Box>
           </Tooltip>
-          ，以及灵感、局内干员buff，需要在此页单独处理。历史重构(科技树)20%局外加攻、难度debuff(加血减伤)默认生效
+          ，以及灵感、局内干员buff，需要在此页单独处理(在后面页面中已选择的藏品不需要在此页重复输入其数值)。历史重构(科技树)20%局外加攻、难度debuff(加血减伤)默认生效
         </Text>
       </HStack>
+
       <DamageCalculator />
+
+      <HStack bottom={3} position="absolute">
+        <Text fontSize="xs" textAlign="center">
+          B站
+          <a
+            href="https://space.bilibili.com/326801433?spm_id_from=333.1007.0.0"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "blue" }}
+          >
+            @Sunday
+          </a>
+        </Text>
+        <a
+          href="https://github.com/SundayChen/Arknights_Sarkaz_Rogue_Damage_Calculator"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "blue" }}
+        >
+          <IconButton
+            aria-label="github"
+            icon={<LuGithub />}
+            size="xs"
+            colorScheme="blackAlpha"
+            variant="link"
+          ></IconButton>
+        </a>
+      </HStack>
     </Flex>
   );
 };
