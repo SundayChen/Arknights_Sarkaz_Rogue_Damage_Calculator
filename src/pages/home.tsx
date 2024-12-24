@@ -1,6 +1,6 @@
 import DamageCalculator from "@/components/damage-calculator";
 import DataContext from "@/contexts/data";
-import { Box, Flex, HStack, IconButton, Text, Tooltip } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, IconButton, Text, Tooltip } from "@chakra-ui/react";
 import { useContext } from "react";
 import { LuGithub } from "react-icons/lu";
 
@@ -14,7 +14,9 @@ const HomePage = () => {
   const hand: string =
     "需要进入关卡触发条件的为局内加攻(如轰鸣之手)，否则为局外加攻(如进入关卡前就能确认效果的携带加攻)";
   const added: string =
-    "“增伤乘区”页之外的增伤藏品全为叠乘，如Scout的狙击镜、奴隶猎捕器、“文明的存续”。紧急活性剂、疗养体验卡、疗养特供卡等其他藏品自行处理";
+    "“增伤乘区”页之外的增伤藏品全为叠乘, 如Scout的狙击镜、奴隶猎捕器、“文明的存续”。紧急活性剂、疗养体验卡、疗养特供卡等其他藏品自行处理";
+  const statement: string =
+    "1.没破甲的时候伤害是负数, 摆了 2.多处使用概率均值和简化模型, 实际伤害会有小幅度波动 3.个人开发难免会有各种bug, 请各位多多包涵 4.如果涉及侵权请联系我, 我会及时将相关内容下架、删除";
 
   return (
     <Flex direction="column" h="100%" justify="flex-start" align="center" p={3}>
@@ -91,6 +93,11 @@ const HomePage = () => {
             variant="link"
           ></IconButton>
         </a>
+        <Tooltip label={statement}>
+          <Button fontSize="xs" textAlign="center" variant="link">
+            叠甲
+          </Button>
+        </Tooltip>
       </HStack>
     </Flex>
   );
