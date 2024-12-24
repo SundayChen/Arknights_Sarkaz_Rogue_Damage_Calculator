@@ -2,7 +2,7 @@ import DataContext from "@/contexts/data";
 import EnemyContext from "@/contexts/enemy";
 import ExtraContext from "@/contexts/extra";
 import { Box, HStack, Text, Tooltip, VStack } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 interface EnemyCardProps {
   bossHP: number;
@@ -22,30 +22,27 @@ const EnemyCard: React.FC<EnemyCardProps> = ({ bossHP, bossDef, bossRes }) => {
   const res_flat = "局内干员的数值削抗";
   const res_percent = "局内干员的百分比削抗后的比例";
 
-  const [existLogos, setExistLogos] = useState<boolean>(false);
-  const [existTexas, setExistTexas] = useState<boolean>(false);
-
   useEffect(() => {
     if (extraCtx.selectedSkill.includes(3)) {
-      if (!existLogos) {
+      if (!extraCtx.existsLogos) {
         enemyCtx.setResReduceNum(enemyCtx.resReduceNum + 10);
-        setExistLogos(true);
+        extraCtx.setExistsLogos(true);
       }
     } else {
-      if (existLogos) {
+      if (extraCtx.existsLogos) {
         enemyCtx.setResReduceNum(enemyCtx.resReduceNum - 10);
-        setExistLogos(false);
+        extraCtx.setExistsLogos(false);
       }
     }
     if (extraCtx.selectedSkill.includes(5)) {
-      if (!existTexas) {
+      if (!extraCtx.existsTexas) {
         enemyCtx.setResPercent(enemyCtx.resPercent * 0.7);
-        setExistTexas(true);
+        extraCtx.setExistsTexas(true);
       }
     } else {
-      if (existTexas) {
+      if (extraCtx.existsTexas) {
         enemyCtx.setResPercent(enemyCtx.resPercent / 0.7);
-        setExistTexas(false);
+        extraCtx.setExistsTexas(false);
       }
     }
   }, [extraCtx.selectedSkill]);

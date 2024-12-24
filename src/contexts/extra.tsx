@@ -8,12 +8,18 @@ interface ExtraContextProps {
   extraAtkSpeeds: number[];
   extraBoosts: number[];
 
+  existsLogos: boolean;
+  existsTexas: boolean;
+
   setSelectedSkill: (selectedSkill: number[]) => void;
   setExtraOutters: (extraOutters: number[]) => void;
   setExtraInners: (extraInners: number[]) => void;
   setExtraAdds: (extraAdds: number[]) => void;
   setExtraAtkSpeeds: (extraAtkSpeed: number[]) => void;
   setExtraBoosts: (extraBoost: number[]) => void;
+
+  setExistsLogos: (existsLogos: boolean) => void;
+  setExistsTexas: (existsTexas: boolean) => void;
 }
 
 const ExtraContext = createContext<ExtraContextProps>({
@@ -24,12 +30,18 @@ const ExtraContext = createContext<ExtraContextProps>({
   extraAtkSpeeds: [],
   extraBoosts: [],
 
+  existsLogos: false,
+  existsTexas: false,
+
   setSelectedSkill: () => {},
   setExtraOutters: () => {},
   setExtraInners: () => {},
   setExtraAdds: () => {},
   setExtraAtkSpeeds: () => {},
   setExtraBoosts: () => {},
+
+  setExistsLogos: () => {},
+  setExistsTexas: () => {},
 });
 
 export const ExtraContextProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -48,6 +60,9 @@ export const ExtraContextProvider: React.FC<{ children: React.ReactNode }> = ({
     100, 100, 100, 100, 100, 100,
   ]);
 
+  const [existsLogos, setExistsLogos] = useState<boolean>(false);
+  const [existsTexas, setExistsTexas] = useState<boolean>(false);
+
   const contextValue = {
     selectedSkill,
     extraOutters,
@@ -56,12 +71,18 @@ export const ExtraContextProvider: React.FC<{ children: React.ReactNode }> = ({
     extraAtkSpeeds,
     extraBoosts,
 
+    existsLogos,
+    existsTexas,
+
     setSelectedSkill,
     setExtraOutters,
     setExtraInners,
     setExtraAdds,
     setExtraAtkSpeeds,
     setExtraBoosts,
+
+    setExistsLogos,
+    setExistsTexas,
   };
 
   return (

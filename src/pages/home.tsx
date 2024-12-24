@@ -41,7 +41,7 @@ const HomePage = () => {
         <Text>法术伤害: {parseFloat(dataCtx.APBoost.toFixed(3))}%</Text>
       </HStack>
 
-      <HStack mt={4} mb={1} px={24}>
+      <HStack mt={4} mb={2} px={24}>
         <Text>
           不便全局统一计算的
           <Tooltip label={outter} bg="gray.600">

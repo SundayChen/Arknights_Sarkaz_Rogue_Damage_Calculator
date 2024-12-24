@@ -4,7 +4,6 @@ import ExtraContext from "@/contexts/extra";
 import { Skill } from "@/models/skill";
 import {
   Flex,
-  HStack,
   NumberInput,
   NumberInputField,
   Select,
@@ -12,7 +11,6 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
@@ -333,7 +331,7 @@ const DamageCalculator = () => {
 
   const Ela3: Skill = {
     id: 0,
-    label: "艾拉3",
+    label: "艾拉3(用雷)",
     dmg: ela3_calc,
   };
 
@@ -375,7 +373,7 @@ const DamageCalculator = () => {
 
   const Vina3: Skill = {
     id: 7,
-    label: "维娜3",
+    label: "维娜3(3狮)",
     dmg: vina3_calc,
   };
 

@@ -49,7 +49,7 @@ const EnemyContext = createContext<EnemyContextProps>({
 export const EnemyContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [name, setName] = useState<string>("奎隆");
+  const [name, setName] = useState<string>("奎隆，摩诃萨埵权化");
   const [HP, setHP] = useState<number>(360000);
   const [def, setDef] = useState<number>(2400);
   const [res, setRes] = useState<number>(75);
@@ -60,7 +60,7 @@ export const EnemyContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [resReduceNum, setResReduceNum] = useState<number>(0);
 
   const clear = () => {
-    setName("奎隆");
+    setName("奎隆，摩诃萨埵权化");
     setHP(360000);
     setDef(2400);
     setRes(75);

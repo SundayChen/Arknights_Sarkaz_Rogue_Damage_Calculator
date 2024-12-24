@@ -85,7 +85,8 @@ export const ItemContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [atkSpeedItems, setAtkSpeedItems] = useState<Item[]>(_atkSpeedItems);
   const [ADBoostItems, setADBoostItems] = useState<Item[]>(_ADBoostItems);
   const [APBoostItems, setAPBoostItems] = useState<Item[]>(_APBoostItems);
-  const [APBoostMultiItems, setAPBoostMultiItems] = useState<Item[]>(_APBoostMultiItems);
+  const [APBoostMultiItems, setAPBoostMultiItems] =
+    useState<Item[]>(_APBoostMultiItems);
   const [dmgBoostItems, setDmgBoostItems] = useState<Item[]>(_dmgBoostItems);
   const [enemyHPItems, setEnemyHPItems] = useState<Item[]>(_enemyHPItems);
   const [enemyDefItems, setEnemyDefItems] = useState<Item[]>(_enemyDefItems);
