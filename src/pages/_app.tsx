@@ -2,6 +2,7 @@ import chakraExtendTheme from "@/chakra-theme";
 import { Fade } from "@/components/transition";
 import { DataContextProvider } from "@/contexts/data";
 import { EnemyContextProvider } from "@/contexts/enemy";
+import { EnemySetContextProvider } from "@/contexts/enemy-set";
 import { ExtraContextProvider } from "@/contexts/extra";
 import { ItemContextProvider } from "@/contexts/item";
 import MainLayout from "@/layouts/main-layout";
@@ -30,11 +31,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <ItemContextProvider>
           <ExtraContextProvider>
             <EnemyContextProvider>
-              <MainLayout>
-                <Fade key={router.pathname.split("/")[1] || ""} in>
-                  <Component {...pageProps} />
-                </Fade>
-              </MainLayout>
+              <EnemySetContextProvider>
+                <MainLayout>
+                  <Fade key={router.pathname.split("/")[1] || ""} in>
+                    <Component {...pageProps} />
+                  </Fade>
+                </MainLayout>
+              </EnemySetContextProvider>
             </EnemyContextProvider>
           </ExtraContextProvider>
         </ItemContextProvider>

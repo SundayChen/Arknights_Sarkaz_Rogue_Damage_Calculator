@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import {
   LuBone,
   LuCrown,
+  LuGhost,
   LuSkull,
   LuSparkles,
   LuSquirrel,
@@ -28,6 +29,7 @@ const HeadNavBar = () => {
     { icon: TbGlassCocktail, label: "攻速藏品", path: "/atkspeed" },
     { icon: LuSparkles, label: "增伤乘区", path: "/dmgboost" },
     { icon: LuSkull, label: "敌人属性", path: "/enemy" },
+    { icon: LuGhost, label: "敌人设置", path: "/set" },
   ];
 
   const selectedIndex = navList.findIndex((item) =>
