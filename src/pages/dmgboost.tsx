@@ -74,7 +74,7 @@ const DamageBoostPage = () => {
       flexDirection="column"
       h="100%"
       w="100%"
-      p={3}
+      p={6}
       alignItems="center"
       justifyContent="center"
     >
