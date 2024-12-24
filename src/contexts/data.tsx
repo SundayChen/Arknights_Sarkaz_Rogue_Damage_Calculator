@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 interface DataContextProps {
   outter: number;
@@ -12,6 +12,11 @@ interface DataContextProps {
   enemyHP: number;
   enemyDef: number;
 
+  ADBoostFlat: number;
+  ADBoostMulti: number;
+  APBoostFlat: number;
+  APBoostMulti: number;
+
   setOutter: (value: number) => void;
   setMeleeOutter: (value: number) => void;
   setRangedOutter: (value: number) => void;
@@ -22,6 +27,11 @@ interface DataContextProps {
   setAPBoost: (value: number) => void;
   setEnemyHP: (value: number) => void;
   setEnemyDef: (value: number) => void;
+
+  setADBoostFlat: (value: number) => void;
+  setADBoostMulti: (value: number) => void;
+  setAPBoostFlat: (value: number) => void;
+  setAPBoostMulti: (value: number) => void;
 }
 
 const DataContext = createContext<DataContextProps>({
@@ -36,6 +46,11 @@ const DataContext = createContext<DataContextProps>({
   enemyHP: 0,
   enemyDef: 0,
 
+  ADBoostFlat: 0,
+  ADBoostMulti: 0,
+  APBoostFlat: 0,
+  APBoostMulti: 0,
+
   setOutter: () => {},
   setMeleeOutter: () => {},
   setRangedOutter: () => {},
@@ -46,6 +61,11 @@ const DataContext = createContext<DataContextProps>({
   setAPBoost: () => {},
   setEnemyHP: () => {},
   setEnemyDef: () => {},
+
+  setADBoostFlat: () => {},
+  setADBoostMulti: () => {},
+  setAPBoostFlat: () => {},
+  setAPBoostMulti: () => {},
 });
 
 export const DataContextProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -62,6 +82,19 @@ export const DataContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [enemyHP, setEnemyHP] = useState<number>(120 / 0.9);
   const [enemyDef, setEnemyDef] = useState<number>(100);
 
+  const [ADBoostFlat, setADBoostFlat] = useState<number>(0);
+  const [ADBoostMulti, setADBoostMulti] = useState<number>(100);
+  const [APBoostFlat, setAPBoostFlat] = useState<number>(0);
+  const [APBoostMulti, setAPBoostMulti] = useState<number>(100);
+
+  useEffect(() => {
+    setADBoost(((100 + ADBoostFlat) * ADBoostMulti) / 100);
+  }, [ADBoostFlat, ADBoostMulti]);
+
+  useEffect(() => {
+    setAPBoost(((100 + APBoostFlat) * APBoostMulti) / 100);
+  }, [APBoostFlat, APBoostMulti]);
+
   const contextValue = {
     outter,
     meleeOutter,
@@ -74,6 +107,11 @@ export const DataContextProvider: React.FC<{ children: React.ReactNode }> = ({
     enemyHP,
     enemyDef,
 
+    ADBoostFlat,
+    ADBoostMulti,
+    APBoostFlat,
+    APBoostMulti,
+
     setOutter,
     setMeleeOutter,
     setRangedOutter,
@@ -84,6 +122,11 @@ export const DataContextProvider: React.FC<{ children: React.ReactNode }> = ({
     setAPBoost,
     setEnemyHP,
     setEnemyDef,
+
+    setADBoostFlat,
+    setADBoostMulti,
+    setAPBoostFlat,
+    setAPBoostMulti,
   };
 
   return (
