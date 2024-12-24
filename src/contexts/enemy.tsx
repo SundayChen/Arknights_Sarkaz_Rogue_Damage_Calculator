@@ -20,8 +20,6 @@ interface EnemyContextProps {
   setDefReduceNum: (defReduceNum: number) => void;
   setResPercent: (resReducePercent: number) => void;
   setResReduceNum: (resReduceNum: number) => void;
-
-  clear: () => void;
 }
 
 const EnemyContext = createContext<EnemyContextProps>({
@@ -42,8 +40,6 @@ const EnemyContext = createContext<EnemyContextProps>({
   setDefReduceNum: () => {},
   setResPercent: () => {},
   setResReduceNum: () => {},
-
-  clear: () => {},
 });
 
 export const EnemyContextProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -58,18 +54,6 @@ export const EnemyContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [defReduceNum, setDefReduceNum] = useState<number>(0);
   const [resPercent, setResPercent] = useState<number>(100);
   const [resReduceNum, setResReduceNum] = useState<number>(0);
-
-  const clear = () => {
-    setName("奎隆，摩诃萨埵权化");
-    setHP(360000);
-    setDef(2400);
-    setRes(75);
-
-    setDefPercent(100);
-    setDefReduceNum(0);
-    setResPercent(100);
-    setResReduceNum(0);
-  };
 
   const contextValue = {
     name,
@@ -91,8 +75,6 @@ export const EnemyContextProvider: React.FC<{ children: React.ReactNode }> = ({
     setDefReduceNum,
     setResPercent,
     setResReduceNum,
-
-    clear,
   };
 
   return (

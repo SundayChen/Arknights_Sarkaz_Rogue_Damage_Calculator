@@ -23,7 +23,7 @@ const EnemyCard: React.FC<EnemyCardProps> = ({ bossHP, bossDef, bossRes }) => {
   const res_percent = "局内干员的百分比削抗后的比例";
 
   useEffect(() => {
-    if (extraCtx.selectedSkill.includes(3)) {
+    if (extraCtx.selectedSkill.includes(4)) {
       if (!extraCtx.existsLogos) {
         enemyCtx.setResReduceNum(enemyCtx.resReduceNum + 10);
         extraCtx.setExistsLogos(true);
@@ -34,7 +34,7 @@ const EnemyCard: React.FC<EnemyCardProps> = ({ bossHP, bossDef, bossRes }) => {
         extraCtx.setExistsLogos(false);
       }
     }
-    if (extraCtx.selectedSkill.includes(5)) {
+    if (extraCtx.selectedSkill.includes(6)) {
       if (!extraCtx.existsTexas) {
         enemyCtx.setResPercent(enemyCtx.resPercent * 0.7);
         extraCtx.setExistsTexas(true);

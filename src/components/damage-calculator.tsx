@@ -3,7 +3,13 @@ import EnemyContext from "@/contexts/enemy";
 import ExtraContext from "@/contexts/extra";
 import { Skill } from "@/models/skill";
 import {
+  Button,
   Flex,
+  Menu,
+  MenuButton,
+  MenuItemOption,
+  MenuList,
+  MenuOptionGroup,
   NumberInput,
   NumberInputField,
   Select,
@@ -17,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import EnemyCard from "./enemy-card";
+import { FiChevronDown } from "react-icons/fi";
 
 const DamageCalculator = () => {
   const dataCtx = useContext(DataContext);
@@ -120,6 +127,18 @@ const DamageCalculator = () => {
         hits_2 +
       (attack * 1.85 - bossDef) * ((hits_1 + hits_2) * 0.2775)
     );
+  };
+
+  const ew3_calc = (
+    extraOutter: number,
+    extraInner: number,
+    extraAdd: number,
+    bossDef: number,
+    bossRes: number,
+    extraAtkSpeed: number,
+    extraBoost: number
+  ) => {
+    return 0;
   };
 
   const logo3_calc = (
@@ -329,6 +348,66 @@ const DamageCalculator = () => {
     );
   };
 
+  const mlynar3_calc = (
+    extraOutter: number,
+    extraInner: number,
+    extraAdd: number,
+    bossDef: number,
+    bossRes: number,
+    extraAtkSpeed: number,
+    extraBoost: number
+  ) => {
+    return 0;
+  };
+
+  const hdl1_calc = (
+    extraOutter: number,
+    extraInner: number,
+    extraAdd: number,
+    bossDef: number,
+    bossRes: number,
+    extraAtkSpeed: number,
+    extraBoost: number
+  ) => {
+    return 0;
+  };
+
+  const ros1_calc = (
+    extraOutter: number,
+    extraInner: number,
+    extraAdd: number,
+    bossDef: number,
+    bossRes: number,
+    extraAtkSpeed: number,
+    extraBoost: number
+  ) => {
+    return 0;
+  };
+
+  const ros2_calc = (
+    extraOutter: number,
+    extraInner: number,
+    extraAdd: number,
+    bossDef: number,
+    bossRes: number,
+    extraAtkSpeed: number,
+    extraBoost: number
+  ) => {
+    return 0;
+  };
+
+  const lappland3_calc = (
+    extraOutter: number,
+    extraInner: number,
+    extraAdd: number,
+    bossDef: number,
+    bossRes: number,
+    extraAtkSpeed: number,
+    extraBoost: number
+  ) => {
+    return 0;
+  };
+
   const Ela3: Skill = {
     id: 0,
     label: "艾拉3(用雷)",
@@ -347,52 +426,89 @@ const DamageCalculator = () => {
     dmg: ew2_calc,
   };
 
-  const Logo3: Skill = {
+  const Ew3: Skill = {
     id: 3,
+    label: "维什戴尔3",
+    dmg: ew3_calc,
+  };
+
+  const Logo3: Skill = {
+    id: 4,
     label: "逻各斯3(近似)",
     dmg: logo3_calc,
   };
 
   const Yato1: Skill = {
-    id: 4,
+    id: 5,
     label: "夜刀1",
     dmg: yato1_calc,
   };
 
   const Texas2: Skill = {
-    id: 5,
+    id: 6,
     label: "德克萨斯2",
     dmg: texas2_calc,
   };
 
   const Tachanka2: Skill = {
-    id: 6,
+    id: 7,
     label: "战车2(理论)",
     dmg: tachanka2_calc,
   };
 
   const Vina3: Skill = {
-    id: 7,
+    id: 8,
     label: "维娜3(3狮)",
     dmg: vina3_calc,
   };
 
   const Goldenglow3: Skill = {
-    id: 8,
+    id: 9,
     label: "澄闪3",
     dmg: goldenglow3_calc,
   };
 
   const Ray3: Skill = {
-    id: 9,
+    id: 10,
     label: "莱伊3",
     dmg: ray3_calc,
+  };
+
+  const Mlynar3: Skill = {
+    id: 11,
+    label: "玛恩纳3",
+    dmg: mlynar3_calc,
+  };
+
+  const Hdl1: Skill = {
+    id: 12,
+    label: "赫德雷1(30s)",
+    dmg: hdl1_calc,
+  };
+
+  const Ros1: Skill = {
+    id: 13,
+    label: "迷迭香1(30s)",
+    dmg: ros1_calc,
+  };
+
+  const Ros2: Skill = {
+    id: 14,
+    label: "迷迭香2",
+    dmg: ros2_calc,
+  };
+
+  const Lappland3: Skill = {
+    id: 15,
+    label: "拉普兰德3",
+    dmg: lappland3_calc,
   };
 
   const skills: Skill[] = [
     Ela3,
     Kroos2,
     Ew2,
+    Ew3,
     Logo3,
     Yato1,
     Texas2,
@@ -400,6 +516,11 @@ const DamageCalculator = () => {
     Vina3,
     Goldenglow3,
     Ray3,
+    Mlynar3,
+    Hdl1,
+    Ros1,
+    Ros2,
+    Lappland3,
   ];
 
   return (
@@ -420,11 +541,12 @@ const DamageCalculator = () => {
               <Th isNumeric>比例</Th>
             </Tr>
           </Thead>
+
           <Tbody>
             {Array.from({ length: 6 }).map((_, index) => (
               <Tr key={index}>
                 <Td>
-                  <Select
+                  {/* <Select
                     placeholder="选择干员技能"
                     value={extraCtx.selectedSkill[index]}
                     onChange={(e) => {
@@ -434,12 +556,44 @@ const DamageCalculator = () => {
                     }}
                     borderColor="gray.400"
                     size="sm"
+                    maxHeight="200px"
+                    overflow="auto"
                   >
                     {skills.map((skill) => (
                       <option value={skill.id}>{skill.label}</option>
                     ))}
-                  </Select>
+                  </Select> */}
+                  <Menu closeOnSelect={true}>
+                    <MenuButton
+                      as={Button}
+                      variant="unstyled"
+                      rightIcon={<FiChevronDown />}
+                      w={32}
+                      style={{ textAlign: "left" }}
+                    >
+                      {extraCtx.selectedSkill[index] !== undefined
+                        ? skills[extraCtx.selectedSkill[index]].label
+                        : "选择干员技能"}
+                    </MenuButton>
+                    <MenuList h="200px" overflowY="auto">
+                      <MenuOptionGroup
+                        type="radio"
+                        onChange={(value) => {
+                          let cur = extraCtx.selectedSkill;
+                          cur[index] = Number.parseInt(value as string);
+                          extraCtx.setSelectedSkill([...cur]);
+                        }}
+                      >
+                        {skills.map((skill) => (
+                          <MenuItemOption value={skill.id.toString()}>
+                            {skill.label}
+                          </MenuItemOption>
+                        ))}
+                      </MenuOptionGroup>
+                    </MenuList>
+                  </Menu>
                 </Td>
+
                 <Td>
                   <NumberInput
                     borderColor="gray.400"
@@ -456,6 +610,7 @@ const DamageCalculator = () => {
                     <NumberInputField />
                   </NumberInput>
                 </Td>
+
                 <Td>
                   <NumberInput
                     borderColor="gray.400"
@@ -472,6 +627,7 @@ const DamageCalculator = () => {
                     <NumberInputField />
                   </NumberInput>
                 </Td>
+
                 <Td>
                   <NumberInput
                     borderColor="gray.400"
@@ -488,6 +644,7 @@ const DamageCalculator = () => {
                     <NumberInputField />
                   </NumberInput>
                 </Td>
+
                 <Td>
                   <NumberInput
                     borderColor="gray.400"
@@ -504,6 +661,7 @@ const DamageCalculator = () => {
                     <NumberInputField />
                   </NumberInput>
                 </Td>
+
                 <Td>
                   <NumberInput
                     borderColor="gray.400"
@@ -520,6 +678,7 @@ const DamageCalculator = () => {
                     <NumberInputField />
                   </NumberInput>
                 </Td>
+
                 <Td isNumeric>
                   {parseFloat(
                     skills[extraCtx.selectedSkill[index]]
@@ -535,6 +694,7 @@ const DamageCalculator = () => {
                       .toFixed(3)
                   )}
                 </Td>
+
                 <Td isNumeric>
                   {parseFloat(
                     (
