@@ -2,6 +2,7 @@ import {
   Item,
   _ADBoostItems,
   _APBoostItems,
+  _APBoostMultiItems,
   _atkSpeedItems,
   _dmgBoostItems,
   _enemyDefItems,
@@ -23,6 +24,7 @@ interface ItemContextProps {
   atkSpeedItems: Item[];
   ADBoostItems: Item[];
   APBoostItems: Item[];
+  APBoostMultiItems: Item[];
   dmgBoostItems: Item[];
   enemyHPItems: Item[];
   enemyDefItems: Item[];
@@ -35,6 +37,7 @@ interface ItemContextProps {
   setAtkSpeedItems: (items: Item[]) => void;
   setADBoostItems: (items: Item[]) => void;
   setAPBoostItems: (items: Item[]) => void;
+  setAPBoostMultiItems: (items: Item[]) => void;
   setDmgBoostItems: (items: Item[]) => void;
   setEnemyHPItems: (items: Item[]) => void;
   setEnemyDefItems: (items: Item[]) => void;
@@ -49,6 +52,7 @@ const ItemContext = createContext<ItemContextProps>({
   atkSpeedItems: [],
   ADBoostItems: [],
   APBoostItems: [],
+  APBoostMultiItems: [],
   dmgBoostItems: [],
   enemyHPItems: [],
   enemyDefItems: [],
@@ -61,6 +65,7 @@ const ItemContext = createContext<ItemContextProps>({
   setAtkSpeedItems: () => {},
   setADBoostItems: () => {},
   setAPBoostItems: () => {},
+  setAPBoostMultiItems: () => {},
   setDmgBoostItems: () => {},
   setEnemyHPItems: () => {},
   setEnemyDefItems: () => {},
@@ -80,6 +85,7 @@ export const ItemContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [atkSpeedItems, setAtkSpeedItems] = useState<Item[]>(_atkSpeedItems);
   const [ADBoostItems, setADBoostItems] = useState<Item[]>(_ADBoostItems);
   const [APBoostItems, setAPBoostItems] = useState<Item[]>(_APBoostItems);
+  const [APBoostMultiItems, setAPBoostMultiItems] = useState<Item[]>(_APBoostMultiItems);
   const [dmgBoostItems, setDmgBoostItems] = useState<Item[]>(_dmgBoostItems);
   const [enemyHPItems, setEnemyHPItems] = useState<Item[]>(_enemyHPItems);
   const [enemyDefItems, setEnemyDefItems] = useState<Item[]>(_enemyDefItems);
@@ -93,6 +99,7 @@ export const ItemContextProvider: React.FC<{ children: React.ReactNode }> = ({
     atkSpeedItems,
     ADBoostItems,
     APBoostItems,
+    APBoostMultiItems,
     dmgBoostItems,
     enemyHPItems,
     enemyDefItems,
@@ -105,6 +112,7 @@ export const ItemContextProvider: React.FC<{ children: React.ReactNode }> = ({
     setAtkSpeedItems,
     setADBoostItems,
     setAPBoostItems,
+    setAPBoostMultiItems,
     setDmgBoostItems,
     setEnemyHPItems,
     setEnemyDefItems,

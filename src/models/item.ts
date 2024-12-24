@@ -86,6 +86,11 @@ export const _APBoostItems: Item[] = [
   { id: "212", name: "灾难之源", data: 20, possesion: false },
 ];
 
+export const _APBoostMultiItems: Item[] = [
+  { id: "163", name: "断杖-苦难巫咒", data: 70, possesion: false },
+  { id: "177", name: "断杖-波纹", data: 12, possesion: false, inputNumber: 0 },
+];
+
 export const _dmgBoostItems: Item[] = [
   { id: "141", name: "文学的开端", data: 50, possesion: false },
 ];

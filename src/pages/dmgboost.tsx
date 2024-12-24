@@ -3,17 +3,30 @@ import DataContext from "@/contexts/data";
 import ItemContext from "@/contexts/item";
 import { Item } from "@/models/item";
 import { Box, HStack, Text, Wrap } from "@chakra-ui/react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const DamageBoostPage = () => {
   const dataCtx = useContext(DataContext);
   const itemCtx = useContext(ItemContext);
 
+  const [ADBoostFlat, setADBoostFlat] = useState<number>(0);
+  const [ADBoostMulti, setADBoostMulti] = useState<number>(100);
+  const [APBoostFlat, setAPBoostFlat] = useState<number>(0);
+  const [APBoostMulti, setAPBoostMulti] = useState<number>(100);
+
+  useEffect(() => {
+    dataCtx.setADBoost(((100 + ADBoostFlat) * ADBoostMulti) / 100);
+  }, [ADBoostFlat, ADBoostMulti]);
+
+  useEffect(() => {
+    dataCtx.setAPBoost(((100 + APBoostFlat) * APBoostMulti) / 100);
+  }, [APBoostFlat, APBoostMulti]);
+
   const onADBoostCheckChange = (item: Item, index: number) => {
     if (itemCtx.ADBoostItems[index].possesion) {
-      dataCtx.setADBoost(dataCtx.ADBoost - item.data);
+      setADBoostFlat((prev) => prev - item.data);
     } else {
-      dataCtx.setADBoost(dataCtx.ADBoost + item.data);
+      setADBoostFlat((prev) => prev + item.data);
     }
     itemCtx.setADBoostItems(
       itemCtx.ADBoostItems.map((i, idx) => {
@@ -30,9 +43,9 @@ const DamageBoostPage = () => {
 
   const onAPBoostCheckChange = (item: Item, index: number) => {
     if (itemCtx.APBoostItems[index].possesion) {
-      dataCtx.setAPBoost(dataCtx.APBoost - item.data);
+      setAPBoostFlat((prev) => prev - item.data);
     } else {
-      dataCtx.setAPBoost(dataCtx.APBoost + item.data);
+      setAPBoostFlat((prev) => prev + item.data);
     }
     itemCtx.setAPBoostItems(
       itemCtx.APBoostItems.map((i, idx) => {
@@ -47,13 +60,36 @@ const DamageBoostPage = () => {
     );
   };
 
+  const onAPBoostMultiCheckChange = (item: Item, index: number) => {
+    if (itemCtx.APBoostMultiItems[index].possesion) {
+      setAPBoostMulti(
+        (prev) => prev / (1 + (item.data * (item.inputNumber ?? 1)) / 100)
+      );
+    } else {
+      setAPBoostMulti(
+        (prev) => prev * (1 + (item.data * (item.inputNumber ?? 1)) / 100)
+      );
+    }
+    itemCtx.setAPBoostMultiItems(
+      itemCtx.APBoostMultiItems.map((i, idx) => {
+        if (idx === index) {
+          return {
+            ...i,
+            possesion: !i.possesion,
+          };
+        }
+        return i;
+      })
+    );
+  };
+
   const onDmgBoostCheckChange = (item: Item, index: number) => {
     if (itemCtx.dmgBoostItems[index].possesion) {
-      dataCtx.setAPBoost(dataCtx.APBoost / (1 + item.data / 100));
-      dataCtx.setADBoost(dataCtx.ADBoost / (1 + item.data / 100));
+      setAPBoostMulti((prev) => prev / (1 + item.data / 100));
+      setADBoostMulti((prev) => prev / (1 + item.data / 100));
     } else {
-      dataCtx.setAPBoost(dataCtx.APBoost * (1 + item.data / 100));
-      dataCtx.setADBoost(dataCtx.ADBoost * (1 + item.data / 100));
+      setAPBoostMulti((prev) => prev * (1 + item.data / 100));
+      setADBoostMulti((prev) => prev * (1 + item.data / 100));
     }
     itemCtx.setDmgBoostItems(
       itemCtx.dmgBoostItems.map((i, idx) => {
@@ -65,6 +101,32 @@ const DamageBoostPage = () => {
         }
         return i;
       })
+    );
+  };
+
+  const onAPBoostMultiInputNumberChange = (value: string, index: number) => {
+    if (!Number.parseInt(value)) return;
+    const old_APBoostMulti =
+      APBoostMulti /
+      (1 +
+        (itemCtx.APBoostMultiItems[index].data / 100) *
+          (itemCtx.APBoostMultiItems[index].inputNumber ?? 0));
+    itemCtx.setAPBoostMultiItems(
+      itemCtx.APBoostMultiItems.map((i, idx) => {
+        if (idx === index) {
+          return {
+            ...i,
+            inputNumber: Number.parseInt(value),
+          };
+        }
+        return i;
+      })
+    );
+    setAPBoostMulti(
+      old_APBoostMulti *
+        (1 +
+          (itemCtx.APBoostMultiItems[index].data * Number.parseInt(value)) /
+            100)
     );
   };
 
@@ -92,6 +154,15 @@ const DamageBoostPage = () => {
             item={item}
             index={index}
             onCheckChange={onAPBoostCheckChange}
+          />
+        ))}
+
+        {itemCtx.APBoostMultiItems.map((item, index) => (
+          <ItemCard
+            item={item}
+            index={index}
+            onCheckChange={onAPBoostMultiCheckChange}
+            onNumberInputChange={onAPBoostMultiInputNumberChange}
           />
         ))}
 
