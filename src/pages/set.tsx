@@ -152,6 +152,7 @@ const EnemySetPage = () => {
               value={setCtx.definedHP}
               onChange={(value) => {
                 setCtx.setDefinedHP(Number(value));
+                enemyCtx.setHP(Number(value));
               }}
             >
               <NumberInputField />
@@ -166,6 +167,7 @@ const EnemySetPage = () => {
               value={setCtx.definedDef}
               onChange={(value) => {
                 setCtx.setDefinedDef(Number(value));
+                enemyCtx.setDef(Number(value));
               }}
             >
               <NumberInputField />
@@ -180,6 +182,7 @@ const EnemySetPage = () => {
               value={setCtx.definedRes}
               onChange={(value) => {
                 setCtx.setDefinedRes(Number(value));
+                enemyCtx.setRes(Number(value));
               }}
             >
               <NumberInputField />

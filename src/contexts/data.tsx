@@ -71,7 +71,7 @@ const DataContext = createContext<DataContextProps>({
 export const DataContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [outter, setOutter] = useState<number>(0);
+  const [outter, setOutter] = useState<number>(20);
   const [meleeOutter, setMeleeOutter] = useState<number>(0);
   const [rangedOutter, setRangedOutter] = useState<number>(0);
   const [inner, setInner] = useState<number>(0);
