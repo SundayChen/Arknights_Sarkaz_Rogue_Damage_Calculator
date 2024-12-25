@@ -4,16 +4,21 @@ import ExtraContext from "@/contexts/extra";
 import { Box, HStack, Text, Tooltip, VStack } from "@chakra-ui/react";
 import { useContext, useEffect } from "react";
 
-interface EnemyCardProps {
-  bossHP: number;
-  bossDef: number;
-  bossRes: number;
-}
-
-const EnemyCard: React.FC<EnemyCardProps> = ({ bossHP, bossDef, bossRes }) => {
+const EnemyCard = () => {
   const enemyCtx = useContext(EnemyContext);
   const dataCtx = useContext(DataContext);
   const extraCtx = useContext(ExtraContext);
+
+  const bossHP = enemyCtx.HP * (dataCtx.enemyHP / 100);
+  const bossDef =
+    enemyCtx.def < enemyCtx.defReduceNum
+      ? 0
+      : (((enemyCtx.def - enemyCtx.defReduceNum) * enemyCtx.defPercent) / 100) *
+        (dataCtx.enemyDef / 100);
+  const bossRes =
+    enemyCtx.res < enemyCtx.resReduceNum
+      ? 0
+      : ((enemyCtx.res - enemyCtx.resReduceNum) * enemyCtx.resPercent) / 100;
 
   const HP_item = "藏品影响后的生命值比例";
   const def_item = "藏品影响后的防御值比例";
