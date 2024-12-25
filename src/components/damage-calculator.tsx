@@ -48,7 +48,7 @@ const DamageCalculator = () => {
         ? 600
         : 100 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((0.625 * 30) / totalAtkSpeed) * 100);
-    const hits = 32 + (Math.round((30 * 30) / interval) - 16) * 4;
+    const hits = 32 + Math.ceil(((30 * 30) / interval - 16) * 4);
     return (
       ((Math.round(608 * totalRangedOutter) *
         (1 + (dataCtx.inner + extraInner) / 100) +
@@ -81,8 +81,8 @@ const DamageCalculator = () => {
         ? 600
         : 100 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((1.3 * 30) / totalAtkSpeed) * 100);
-    const hits_1 = Math.round((12.5 * 30) / interval);
-    const hits_2 = Math.round((12.5 * 30 * 4) / interval);
+    const hits_1 = Math.ceil((12.5 * 30) / interval);
+    const hits_2 = Math.ceil((12.5 * 30 * 4) / interval);
     return (
       (attack * 1.25 * 2 - 3 * bossDef) *
         (dataCtx.ADBoost / 100) *
@@ -129,16 +129,34 @@ const DamageCalculator = () => {
           ? 600
           : 100 + dataCtx.atkSpeed + extraAtkSpeed;
       const interval = Math.round(((1.6 * 30) / totalAtkSpeed) * 100);
-      const hits = Math.round((30 * 30) / interval);
+      const hits = Math.ceil((30 * 30) / interval);
 
       const singleHitDmg =
-        ((attack * (0.6 * 0.65 + 1) + 165 * 1.6) * (100 - bossRes)) / 100;
-      const darkInjureTakeUp = Math.ceil(12500 / singleHitDmg) * 2;
+        ((attack * (0.6 * 0.65 + 1) + 165 * 1.6) *
+          (100 - bossRes) *
+          (dataCtx.APBoost / 100) *
+          (extraBoost / 100)) /
+        100;
+      const darkInjureTakeUp = Math.ceil(12500 / singleHitDmg);
+      const darkInjureTimes =
+        hits < darkInjureTakeUp
+          ? 0
+          : darkInjureTakeUp * interval * 2 < 15 * 30
+          ? 2
+          : 1;
+      const darkInjurePeroid =
+        darkInjureTimes === 0
+          ? 0
+          : darkInjureTimes === 2
+          ? 30 * 30 - 2 * darkInjureTakeUp * interval
+          : darkInjureTakeUp * interval < 15 * 30
+          ? 15 * 30
+          : 30 * 30 - darkInjureTakeUp * interval;
 
       return (
-        singleHitDmg * (dataCtx.APBoost / 100) * (extraBoost / 100) * hits +
-        attack * 0.6 * 0.6 * (hits - darkInjureTakeUp) +
-        24000
+        singleHitDmg * hits +
+        attack * 0.6 * 0.6 * Math.ceil(darkInjurePeroid / interval) +
+        12000 * darkInjureTimes
       );
     }
   };
@@ -163,7 +181,7 @@ const DamageCalculator = () => {
         ? 600
         : 200 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((0.93 * 30) / totalAtkSpeed) * 100);
-    const hits = (Math.round((20 * 30) / interval) / 4) * 10;
+    const hits = Math.ceil(((20 * 30) / interval / 4) * 10);
     return (
       (attack - bossDef) * (dataCtx.ADBoost / 100) * (extraBoost / 100) * hits +
       ((attack * 0.2 * (100 - bossRes)) / 100) *
@@ -193,7 +211,7 @@ const DamageCalculator = () => {
         ? 600
         : 110 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((0.93 * 30) / totalAtkSpeed) * 100);
-    const hits = Math.round((10 * 30 * 2) / interval);
+    const hits = Math.ceil((10 * 30 * 2) / interval);
     return (
       (((attack * 2.4 + attack * hits) * (100 - bossRes)) / 100) *
       (dataCtx.APBoost / 100) *
@@ -221,7 +239,7 @@ const DamageCalculator = () => {
         ? 600
         : 100 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round((5.85 / totalAtkSpeed) * 100);
-    const hits = Math.round((4 * 30) / interval);
+    const hits = Math.ceil((4 * 30) / interval);
     return (
       (attack * (0.15 * 2 + 0.85) - bossDef) *
       (dataCtx.ADBoost / 100) *
@@ -250,7 +268,7 @@ const DamageCalculator = () => {
         ? 600
         : 108 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round((30 / totalAtkSpeed) * 100);
-    const hits = Math.round((25 * 30) / interval);
+    const hits = Math.ceil((25 * 30) / interval);
     return attack * (extraBoost / 100) * hits;
   };
 
@@ -265,22 +283,28 @@ const DamageCalculator = () => {
   ) => {
     const totalRangedOutter =
       1 + (dataCtx.outter + dataCtx.rangedOutter + extraOutter) / 100;
+    const attack =
+      Math.round(454 * totalRangedOutter) *
+        (1.8 + (dataCtx.inner + extraInner) / 100) +
+      extraAdd;
     const totalAtkSpeed =
       100 + dataCtx.atkSpeed + extraAtkSpeed > 600
         ? 600
         : 100 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((1.3 * 30) / totalAtkSpeed) * 100);
-    const hits = Math.round((30 * 30) / interval) * 3;
+    const hits = Math.ceil((30 * 30) / interval);
+    const explodeTimes = Math.ceil(hits * 0.1);
+
     return (
-      (((Math.round(454 * totalRangedOutter) *
-        (1.8 + (dataCtx.inner + extraInner) / 100) +
-        extraAdd) *
-        (0.9 + 0.1 * 3.75) *
+      ((attack *
+        (1.1 * (hits - (explodeTimes + 1) * 5) +
+          0.65 * 5 * (explodeTimes + 1) +
+          explodeTimes * 3.75) *
         (118 - bossRes > 100 ? 100 : 118 - bossRes)) /
         100) *
       (dataCtx.APBoost / 100) *
       (extraBoost / 100) *
-      (1.1 * hits * 0.9 + 0.65 * hits * 0.1)
+      3
     );
   };
 
@@ -305,7 +329,7 @@ const DamageCalculator = () => {
         : 100 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((1.6 * 30) / totalAtkSpeed) * 100);
     const hits =
-      8 + Math.floor((16 * 30 - 7 * interval) / (12 + interval * 2)) * 2;
+      8 + Math.round(((16 * 30 - 8 * interval) / (12 + interval * 2)) * 2);
     return (
       (attack * 3.3 * 1.2 - bossDef) *
       1.2 *
