@@ -39,6 +39,7 @@ const EnemyCard = () => {
         extraCtx.setExistsLogos(false);
       }
     }
+
     if (extraCtx.selectedSkill.includes(6)) {
       if (!extraCtx.existsTexas) {
         enemyCtx.setResPercent(enemyCtx.resPercent * 0.7);
@@ -48,6 +49,23 @@ const EnemyCard = () => {
       if (extraCtx.existsTexas) {
         enemyCtx.setResPercent(enemyCtx.resPercent / 0.7);
         extraCtx.setExistsTexas(false);
+      }
+    }
+
+    if (
+      extraCtx.selectedSkill.includes(13) ||
+      extraCtx.selectedSkill.includes(14)
+    ) {
+      if (!extraCtx.existsRosmontis) {
+        enemyCtx.setResReduceNum(enemyCtx.resReduceNum + 20);
+        enemyCtx.setDefReduceNum(enemyCtx.defReduceNum + 400);
+        extraCtx.setExistsRosmontis(true);
+      }
+    } else {
+      if (extraCtx.existsRosmontis) {
+        enemyCtx.setResReduceNum(enemyCtx.resReduceNum - 20);
+        enemyCtx.setDefReduceNum(enemyCtx.defReduceNum - 400);
+        extraCtx.setExistsRosmontis(false);
       }
     }
   }, [extraCtx.selectedSkill]);

@@ -10,6 +10,7 @@ interface ExtraContextProps {
 
   existsLogos: boolean;
   existsTexas: boolean;
+  existsRosmontis: boolean;
 
   setSelectedSkill: (selectedSkill: number[]) => void;
   setExtraOutters: (extraOutters: number[]) => void;
@@ -20,6 +21,7 @@ interface ExtraContextProps {
 
   setExistsLogos: (existsLogos: boolean) => void;
   setExistsTexas: (existsTexas: boolean) => void;
+  setExistsRosmontis: (existsRosmontis: boolean) => void;
 }
 
 const ExtraContext = createContext<ExtraContextProps>({
@@ -32,6 +34,7 @@ const ExtraContext = createContext<ExtraContextProps>({
 
   existsLogos: false,
   existsTexas: false,
+  existsRosmontis: false,
 
   setSelectedSkill: () => {},
   setExtraOutters: () => {},
@@ -42,6 +45,7 @@ const ExtraContext = createContext<ExtraContextProps>({
 
   setExistsLogos: () => {},
   setExistsTexas: () => {},
+  setExistsRosmontis: () => {},
 });
 
 export const ExtraContextProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -62,6 +66,7 @@ export const ExtraContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [existsLogos, setExistsLogos] = useState<boolean>(false);
   const [existsTexas, setExistsTexas] = useState<boolean>(false);
+  const [existsRosmontis, setExistsRosmontis] = useState<boolean>(false);
 
   const contextValue = {
     selectedSkill,
@@ -73,6 +78,7 @@ export const ExtraContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
     existsLogos,
     existsTexas,
+    existsRosmontis,
 
     setSelectedSkill,
     setExtraOutters,
@@ -83,6 +89,7 @@ export const ExtraContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
     setExistsLogos,
     setExistsTexas,
+    setExistsRosmontis,
   };
 
   return (

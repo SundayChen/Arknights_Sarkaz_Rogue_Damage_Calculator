@@ -48,7 +48,7 @@ const DamageCalculator = () => {
         ? 600
         : 100 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((0.625 * 30) / totalAtkSpeed) * 100);
-    const hits = 32 + Math.ceil(((30 * 30) / interval - 16) * 4);
+    const hits = 32 + Math.round(((30 * 30) / interval - 16) * 4);
     return (
       ((Math.round(608 * totalRangedOutter) *
         (1 + (dataCtx.inner + extraInner) / 100) +
@@ -77,12 +77,12 @@ const DamageCalculator = () => {
         (1.35 + (dataCtx.inner + extraInner) / 100) +
       extraAdd;
     const totalAtkSpeed =
-      100 + dataCtx.atkSpeed + extraAtkSpeed > 600
+      107 + dataCtx.atkSpeed + extraAtkSpeed > 600
         ? 600
-        : 100 + dataCtx.atkSpeed + extraAtkSpeed;
+        : 107 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((1.3 * 30) / totalAtkSpeed) * 100);
-    const hits_1 = Math.ceil((12.5 * 30) / interval);
-    const hits_2 = Math.ceil((12.5 * 30 * 4) / interval);
+    const hits_1 = Math.floor((12.5 * 30) / interval);
+    const hits_2 = Math.floor((12.5 * 30 * 4) / interval);
     return (
       (attack * 1.25 * 2 - 3 * bossDef) *
         (dataCtx.ADBoost / 100) *
@@ -92,7 +92,7 @@ const DamageCalculator = () => {
         (dataCtx.ADBoost / 100) *
         (extraBoost / 100) *
         hits_2 +
-      (attack * 1.85 - bossDef) * ((hits_1 + hits_2) * 0.2775)
+      (attack * 1.85 - bossDef) * Math.round((hits_1 + hits_2) * 0.2775)
     );
   };
 
@@ -105,7 +105,19 @@ const DamageCalculator = () => {
     extraAtkSpeed: number,
     extraBoost: number
   ) => {
-    return 0;
+    const totalRangedOutter =
+      1 + (dataCtx.outter + dataCtx.rangedOutter + extraOutter) / 100;
+    const attack =
+      Math.round(874 * totalRangedOutter) *
+        (2.8 + (dataCtx.inner + extraInner) / 100) +
+      extraAdd;
+    return (
+      (attack * 2.2 * 1.25 * 2 - bossDef * 3) *
+        (dataCtx.ADBoost / 100) *
+        (extraBoost / 100) *
+        6 +
+      (attack * 1.85 - bossDef) * 6
+    );
   };
 
   const logo3_calc = (
@@ -137,26 +149,26 @@ const DamageCalculator = () => {
           (dataCtx.APBoost / 100) *
           (extraBoost / 100)) /
         100;
-      const darkInjureTakeUp = Math.ceil(12500 / singleHitDmg);
+      const darkInjureTakeUp = Math.ceil(25000 / singleHitDmg);
       const darkInjureTimes =
         hits < darkInjureTakeUp
           ? 0
-          : darkInjureTakeUp * interval * 2 < 15 * 30
+          : (darkInjureTakeUp - 1) * interval * 2 < 15 * 30
           ? 2
           : 1;
       const darkInjurePeroid =
         darkInjureTimes === 0
           ? 0
           : darkInjureTimes === 2
-          ? 30 * 30 - 2 * darkInjureTakeUp * interval
+          ? 30 * 30 - 2 * (darkInjureTakeUp - 1) * interval
           : darkInjureTakeUp * interval < 15 * 30
           ? 15 * 30
-          : 30 * 30 - darkInjureTakeUp * interval;
+          : 30 * 30 - (darkInjureTakeUp - 1) * interval;
 
       return (
         singleHitDmg * hits +
         attack * 0.6 * 0.6 * Math.ceil(darkInjurePeroid / interval) +
-        12000 * darkInjureTimes
+        (800 * darkInjurePeroid) / 30
       );
     }
   };
@@ -211,7 +223,7 @@ const DamageCalculator = () => {
         ? 600
         : 110 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((0.93 * 30) / totalAtkSpeed) * 100);
-    const hits = Math.ceil((10 * 30 * 2) / interval);
+    const hits = Math.round((10 * 30 * 2) / interval);
     return (
       (((attack * 2.4 + attack * hits) * (100 - bossRes)) / 100) *
       (dataCtx.APBoost / 100) *
@@ -239,11 +251,12 @@ const DamageCalculator = () => {
         ? 600
         : 100 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round((5.85 / totalAtkSpeed) * 100);
-    const hits = Math.ceil((4 * 30) / interval);
+    const hits = Math.round((4 * 30) / interval);
     return (
       (attack * (0.15 * 2 + 0.85) - bossDef) *
       (dataCtx.ADBoost / 100) *
       (extraBoost / 100) *
+      1.1 *
       hits
     );
   };
@@ -268,7 +281,7 @@ const DamageCalculator = () => {
         ? 600
         : 108 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round((30 / totalAtkSpeed) * 100);
-    const hits = Math.ceil((25 * 30) / interval);
+    const hits = Math.round((25 * 30) / interval);
     return attack * (extraBoost / 100) * hits;
   };
 
@@ -292,8 +305,8 @@ const DamageCalculator = () => {
         ? 600
         : 100 + dataCtx.atkSpeed + extraAtkSpeed;
     const interval = Math.round(((1.3 * 30) / totalAtkSpeed) * 100);
-    const hits = Math.ceil((30 * 30) / interval);
-    const explodeTimes = Math.ceil(hits * 0.1);
+    const hits = Math.round((30 * 30) / interval);
+    const explodeTimes = Math.round(hits * 0.1);
 
     return (
       ((attack *
@@ -348,7 +361,25 @@ const DamageCalculator = () => {
     extraAtkSpeed: number,
     extraBoost: number
   ) => {
-    return 0;
+    const totalMeleeOutter =
+      1 + (dataCtx.outter + dataCtx.meleeOutter + extraOutter) / 100;
+    const attack =
+      Math.round(410 * totalMeleeOutter) *
+        (5 + (dataCtx.inner + extraInner) / 100) +
+      extraAdd;
+    const totalAtkSpeed =
+      100 + dataCtx.atkSpeed + extraAtkSpeed > 600
+        ? 600
+        : 100 + dataCtx.atkSpeed + extraAtkSpeed;
+    const interval = Math.round((36 / totalAtkSpeed) * 100);
+    const hits = Math.round((28 * 30) / interval);
+    return (
+      (attack * 1.13 * 1.8 - bossDef) *
+        (dataCtx.ADBoost / 100) *
+        (extraBoost / 100) *
+        hits +
+      attack * 0.12 * (extraBoost / 100) * hits
+    );
   };
 
   const hdl1_calc = (
@@ -360,7 +391,31 @@ const DamageCalculator = () => {
     extraAtkSpeed: number,
     extraBoost: number
   ) => {
-    return 0;
+    const totalMeleeOutter =
+      1 + (dataCtx.outter + dataCtx.meleeOutter + extraOutter) / 100;
+    const attack =
+      Math.round(1831 * totalMeleeOutter) *
+        (1 + (dataCtx.inner + extraInner) / 100) +
+      extraAdd;
+    const totalAtkSpeed =
+      100 + dataCtx.atkSpeed + extraAtkSpeed > 600
+        ? 600
+        : 100 + dataCtx.atkSpeed + extraAtkSpeed;
+    const interval = Math.round(((2.5 * 30) / totalAtkSpeed) * 100);
+    const hits = Math.round((30 * 30) / interval);
+    const skillHits = Math.floor(hits / 3);
+    return (
+      (attack * 1.1 - bossDef) *
+        (dataCtx.ADBoost / 100) *
+        (extraBoost / 100) *
+        1.1 *
+        (hits - skillHits) +
+      (attack * 1.1 * 2.6 - bossDef) *
+        (dataCtx.ADBoost / 100) *
+        (extraBoost / 100) *
+        1.1 *
+        skillHits
+    );
   };
 
   const ros1_calc = (
@@ -372,7 +427,28 @@ const DamageCalculator = () => {
     extraAtkSpeed: number,
     extraBoost: number
   ) => {
-    return 0;
+    const totalRangedOutter =
+      1 + (dataCtx.outter + dataCtx.rangedOutter + extraOutter) / 100;
+    const attack =
+      Math.round(870 * totalRangedOutter) *
+        (1.08 + (dataCtx.inner + extraInner) / 100) +
+      extraAdd;
+    const totalAtkSpeed =
+      107 + dataCtx.atkSpeed + extraAtkSpeed > 600
+        ? 600
+        : 107 + dataCtx.atkSpeed + extraAtkSpeed;
+    const interval = Math.round(((2.1 * 30) / totalAtkSpeed) * 100);
+    const hits = Math.round((30 * 30) / interval);
+    const skillHits = Math.floor(hits / 3);
+    return (
+      (attack * 1.5 - (bossDef < 165 ? 0 : bossDef - 165) * 2) *
+        (dataCtx.ADBoost / 100) *
+        (extraBoost / 100) *
+        hits +
+      (((attack * 1.8 * skillHits + attack * hits) * (100 - bossRes)) / 100) *
+        (dataCtx.APBoost / 100) *
+        (extraBoost / 100)
+    );
   };
 
   const ros2_calc = (
@@ -384,7 +460,28 @@ const DamageCalculator = () => {
     extraAtkSpeed: number,
     extraBoost: number
   ) => {
-    return 0;
+    const totalRangedOutter =
+      1 + (dataCtx.outter + dataCtx.rangedOutter + extraOutter) / 100;
+    const attack =
+      Math.round(870 * totalRangedOutter) *
+        (1.63 + (dataCtx.inner + extraInner) / 100) +
+      extraAdd;
+    const totalAtkSpeed =
+      107 + dataCtx.atkSpeed + extraAtkSpeed > 600
+        ? 600
+        : 107 + dataCtx.atkSpeed + extraAtkSpeed;
+    const interval = Math.round(((2.1 * 1.5 * 30) / totalAtkSpeed) * 100);
+    const hits = Math.round((40 * 30) / interval);
+    return (
+      (attack * 2.5 - (bossDef < 165 ? 0 : bossDef - 165) * 2) *
+        (dataCtx.ADBoost / 100) *
+        (extraBoost / 100) *
+        hits +
+      ((attack * (100 - bossRes)) / 100) *
+        (dataCtx.APBoost / 100) *
+        (extraBoost / 100) *
+        hits
+    );
   };
 
   const lappland3_calc = (
@@ -396,7 +493,28 @@ const DamageCalculator = () => {
     extraAtkSpeed: number,
     extraBoost: number
   ) => {
-    return 0;
+    const totalRangedOutter =
+      1 + (dataCtx.outter + dataCtx.rangedOutter + extraOutter) / 100;
+    const attack =
+      Math.round(460 * totalRangedOutter) *
+        (1.8 + (dataCtx.inner + extraInner) / 100) +
+      extraAdd;
+    const totalAtkSpeed =
+      110 + dataCtx.atkSpeed + extraAtkSpeed > 600
+        ? 600
+        : 110 + dataCtx.atkSpeed + extraAtkSpeed;
+    const interval = Math.round(((1.3 * 30) / totalAtkSpeed) * 100);
+    const hits = Math.round((40 * 30) / interval);
+    const wolfHits = Math.round((40 * 30 - 49) / interval);
+
+    return (
+      ((attack *
+        (hits + 4 * 1.21 * (wolfHits - 5) + 4 * 0.65 * 5 + 1.2 * 38) *
+        (100 - bossRes)) /
+        100) *
+      (dataCtx.APBoost / 100) *
+      (extraBoost / 100)
+    );
   };
 
   const Ela3: Skill = {
@@ -425,7 +543,7 @@ const DamageCalculator = () => {
 
   const Logo3: Skill = {
     id: 4,
-    label: "逻各斯3(近似)",
+    label: "逻各斯3(Boss)",
     dmg: logo3_calc,
   };
 
@@ -491,7 +609,7 @@ const DamageCalculator = () => {
 
   const Lappland3: Skill = {
     id: 15,
-    label: "拉普兰德3",
+    label: "拉普兰德3(4狼)",
     dmg: lappland3_calc,
   };
 
